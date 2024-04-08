@@ -1,9 +1,18 @@
 <script setup>
+import { onMounted, defineEmits, defineProps } from "vue";
+
+const props = defineProps(['currElevatot'])
+const emitCall = defineEmits(['call'])
+
+function call(event)
+{
+    emitCall('call', props.currElevatot,event)
+}
 
 </script>
 
 <template>
-<div class="floor-content">
+<div :data-elevatorIndex="props.currElevatot" class="floor-content">
     <div class="floor-content__mine mine"></div>
     <div class="floor-content__holl holl">
         <div class="holl__button button-call" @click="call"></div>
@@ -36,5 +45,5 @@
         border: 3px solid #fffb00;
     }
 }
-.mine{background-color: rgb(197, 197, 197);}
+.mine{background-color: rgb(197, 197, 197);position: relative;}
 </style>
