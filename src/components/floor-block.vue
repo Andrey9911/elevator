@@ -2,13 +2,12 @@
 import { onMounted, defineEmits, defineProps } from "vue";
 
 const props = defineProps(['currElevatot'])
-const emitCall = defineEmits(['call'])
+const emits = defineEmits(['call'])
 
 function call(event)
 {
-    emitCall('call', props.currElevatot,event)
+    emits('call', props.currElevatot,event)
 }
-
 </script>
 
 <template>
