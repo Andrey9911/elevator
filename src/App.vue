@@ -6,7 +6,8 @@ import { callProcessing } from "../src/js/index";
 import { walk } from "vue/compiler-sfc";
 import  Elevator  from "@/js/elevator";
 
-let movement; //указывает направление движения
+let movement = ref(''); //указывает направление движения
+let actualPosEvel = ref() //текущий этаж
 let elevator_inst = reactive(new Elevator());
 let elevator_el = ref();
 let queue = ref(new Map()); //очередь вызовов
@@ -16,12 +17,10 @@ let curr_floor = ref(); //текущий эаж
 provide('elevator_inst', elevator_inst)
 
 onMounted(() => {
-  console.log(elevator_el.value.offsetTop);
-  console.log(arrayPositionFloors['5']);
   elevator_el.value.style.top = arrayPositionFloors['5'] + 'px';
 })
 function start(data){
-  arrayPositionFloors[data.dataset.elevatorindex] = data.offsetTop
+  arrayPositionFloors[data.dataset.elevatorindex] = data.offsetTop 
   
 }
 
@@ -30,8 +29,8 @@ function start(data){
 
 
 
+
 function call(floor, el){
-    console.log(elevator_el);
     curr_floor.value = floor;
     currPosY.value = el.srcElement.parentElement.offsetTop;
     // console.log(floor_elem.value);
@@ -58,9 +57,11 @@ function call(floor, el){
                         :current_pos_elevator="elevator_el"
                         @start="(el) => elevator_el = el"
                         @move="(data) => movement = data"
+                        @actualPos="el => actualPosEvel = el"
                         >
-      <div class="screen">
+      <div class="screen-content">
         {{movement}}
+        {{ actualPosEvel }}
       </div>
     </elevator-block>
     <div class="q">{{ queue }}</div>

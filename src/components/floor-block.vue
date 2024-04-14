@@ -8,19 +8,19 @@ const props = defineProps(['currElevatot', 'q'])
 const emits = defineEmits(['call', 'start'])
 onMounted(()=>{
     emits('start', el.value)
-    el.value.dataset
 })
 
 function call(event)
 {
-    emits('call', Number(el.value.dataset.elevatorindex),event)
+    emits('call', Number(el.value.dataset.elevatorindex),event);
+    // console.log(`CALL IN FILE^ FLOOR-BLOCK.VUE - DATASET = ${el.value.dataset.elevatorindex}`);
 }
 let isBuzy = computed(() => {
     return elevator_inst.status === 'buzy' ? true : false 
 })
-// let isProccesing = computed(() => {
-//     return elevator_inst.currentFloor === el.value.dataset ? true: false
-// })
+let isProccesing = computed(() => {
+    return elevator_inst.currentFloor === props.currElevatot ? true : false
+})
 
 </script>
 
@@ -29,7 +29,7 @@ let isBuzy = computed(() => {
     <div class="floor-content__mine mine"></div>
     <div class="floor-content__holl holl">
         <div class="holl__button button-call" 
-        :class="{'batton-call_caused':isBuzy}" 
+        :class="{'batton-call_caused':isBuzy, 'batton-call_proccesing' : isProccesing}" 
         @click="call"></div>
     </div>
 </div>
